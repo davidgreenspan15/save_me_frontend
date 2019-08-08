@@ -10,9 +10,9 @@ class HomePage extends React.Component{
   render(){
     return(
       <div>
-      <UserHomeCard/>
+      <UserHomeCard transactions={this.props.transactions} currentUser={this.props.currentUser}/>
       <BudgetChart/>
-      <RecentTransactionsContainer/>
+      <RecentTransactionsContainer editTransaction={this.props.editTransaction} deleteTransaction={this.props.deleteTransaction} transactions={this.props.transactions}/>
       </div>
     )
   }

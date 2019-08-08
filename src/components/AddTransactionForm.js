@@ -63,8 +63,12 @@ class AddTransactionForm extends React.Component{
               })
     })
     .then(resp => resp.json())
-    .then(response => console.log(response))
-  }
+    .then(response => {
+      if(response.errors){
+        alert(response.errors)
+      }else{
+    this.props.addtransaction(response)}
+  })}
 
   render(){
     return(
