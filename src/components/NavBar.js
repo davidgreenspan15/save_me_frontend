@@ -12,9 +12,9 @@ handleClick = () =>{
       <div>
       {this.props.loggedIn ?
         <div>
-        <Link to="/"><h1>$aveME</h1></Link>
+        <Link to="/home"><h1>$aveME</h1></Link>
         <Link to="/addtransaction"><p>Add Transaction</p></Link>
-        <p>Transaction</p>
+        <Link to="/transactions"><p>Transaction</p></Link>
         <p>My Budget</p>
         <Link to="/profile"><p>Profile</p></Link>
         <button onClick={this.handleClick} >Logout</button>

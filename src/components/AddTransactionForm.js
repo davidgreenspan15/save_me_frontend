@@ -14,13 +14,9 @@ class AddTransactionForm extends React.Component{
   }
 
   componentDidMount(){
-    fetch("http://localhost:3000/categories")
-    .then(resp => resp.json())
-    .then(categories => {
       this.setState({
-        categories: categories
+        categories: this.props.categories
       })
-    })
   }
 
   renderCategoryOptions = () => this.state.categories.map(category => <option key={category.id} value= {category.id}>{category.name}</option>)

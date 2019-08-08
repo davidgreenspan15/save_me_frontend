@@ -12,7 +12,7 @@ class HomePage extends React.Component{
       <div>
       <UserHomeCard transactions={this.props.transactions} currentUser={this.props.currentUser}/>
       <BudgetChart/>
-      <RecentTransactionsContainer editTransaction={this.props.editTransaction} deleteTransaction={this.props.deleteTransaction} transactions={this.props.transactions}/>
+      <RecentTransactionsContainer editTransaction={this.props.editTransaction} categories={this.props.categories} deleteTransaction={this.props.deleteTransaction} transactions={this.props.transactions}/>
       </div>
     )
   }
