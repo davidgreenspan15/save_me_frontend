@@ -14,18 +14,15 @@ class Transaction extends React.Component{
   }
 
 
+    componentDidMount(){
+      this.setState({
+        categories:this.props.categories
+      })
+    }
+
   toggleEdit = (event) => {
     this.setState({
-
       [event.target.name]: !this.state.edit
-    },()=>{
-      fetch("http://localhost:3000/categories")
-      .then(resp => resp.json())
-      .then(categories => {
-        this.setState({
-          categories: categories
-        })
-      })
     })
   }
   handleClick = (event) => {
@@ -122,7 +119,7 @@ class Transaction extends React.Component{
             <p>{this.props.transaction.description}</p>
             <p>{this.props.transaction.category.name}</p>
             <p>{this.props.transaction.price}</p>
-            <p>{this.props.transaction.frequency}</p>
+            <p>{this.props.transaction.created_at}</p>
             <button onClick={this.toggleEdit} type="button" name="edit">✎</button>
             <button onClick={this.deleteTransaction} type="button" name="delete">ｘ</button>
             <hr/>

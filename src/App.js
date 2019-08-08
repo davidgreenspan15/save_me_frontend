@@ -8,6 +8,8 @@ import HomePage from './containers/HomePage.js'
 import LoginForm from './components/LoginForm.js'
 import AddTransactionForm from './components/AddTransactionForm.js'
 import Profile from './components/Profile.js'
+import TransactionsMainContainer from './containers/TransactionsMainContainer.js'
+
 
 
 
@@ -20,7 +22,8 @@ class App extends React.Component {
   state = {
     currentUser: null,
     transactions: [],
-    loggedIn: false
+    loggedIn: false,
+    categories:[]
   }
 
   logout = () => {
@@ -45,7 +48,7 @@ class App extends React.Component {
       loggedIn: true
     }, () => {
       localStorage.user_id = user.id
-      this.props.history.push("/")
+      this.props.history.push("/home")
     })
   }
 
@@ -55,9 +58,12 @@ class App extends React.Component {
     .then(transactions => {
   const myTransactions = transactions.filter(transaction => transaction.user.id === parseInt(localStorage.user_id));
       this.setState({
-        transactions: myTransactions.reverse()
-      },() => console.log("IN APP:", this.state.transactions))
+        transactions: myTransactions.sort(function(a,b){
+          return new Date(b.date) - new Date(a.date)
+        })
+      })
     })
+
 
     fetch("http://localhost:3000/auto_login",{
       headers:{
@@ -75,11 +81,27 @@ class App extends React.Component {
         })
       }
     })
+    fetch("http://localhost:3000/categories")
+    .then(resp => resp.json())
+    .then(categories => {
+      this.setState({
+        categories: categories
+      })
+    })
   }
+
 
   addtransaction = (newTransaction) =>{
     this.setState({
       transactions: [newTransaction, ...this.state.transactions]
+    },() => {
+      this.setState({
+        transactions: this.state.transactions.sort(function(a,b){
+          return new Date(b.date) - new Date(a.date)
+        })
+      },() => {
+        this.props.history.push("/home")
+      })
     })
   }
 
@@ -121,12 +143,13 @@ class App extends React.Component {
           <Route path="/signup" render={() => <SignupForm setCurrentUser={this.setCurrentUser}/>}/>
           <Route path="/login" render={() => <LoginForm setCurrentUser={this.setCurrentUser}/>}/>
             {
-            this.state.currentUser && this.state.transactions.length > 0
+            this.state.currentUser
             ?
             <div>
+              <Route path="/transactions" render={() => <TransactionsMainContainer transactions={this.state.transactions} categories={this.state.categories}/>}/>
               <Route path="/profile" render={() => <Profile  deleteUser={this.deleteUser} updateCurrentUser={this.updateCurrentUser} currentUser={this.state.currentUser}/>}/>
-              <Route path="/addtransaction" render={() => <AddTransactionForm addtransaction={this.addtransaction}/>}/>
-              <Route path="/" render={()=> <HomePage deleteTransaction={this.deleteTransaction} transactions={this.state.transactions} editTransaction={this.editTransaction} currentUser={this.state.currentUser}/>}/>
+              <Route path="/addtransaction" render={() => <AddTransactionForm addtransaction={this.addtransaction} categories={this.state.categories}/>}/>
+              <Route path="/home" render={()=> <HomePage deleteTransaction={this.deleteTransaction} categories={this.state.categories} transactions={this.state.transactions} editTransaction={this.editTransaction} currentUser={this.state.currentUser}/>}/>
             </div>
             :
             null

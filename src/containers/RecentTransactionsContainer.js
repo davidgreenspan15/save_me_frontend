@@ -10,11 +10,10 @@ class RecentTransactionsContainer extends React.Component{
     }
 
     renderRecentTransactions = () => {
-      return this.recentTransactions().map(transaction => <Transaction key={transaction.id} deleteTransaction={this.props.deleteTransaction} editTransaction={this.props.editTransaction} transaction={transaction}/>)
+      return this.recentTransactions().map(transaction => <Transaction key={transaction.id} deleteTransaction={this.props.deleteTransaction} categories={this.props.categories} editTransaction={this.props.editTransaction} transaction={transaction}/>)
     }
 
   render(){
-    console.log("RT", this.props)
     return(
       <div>
         {this.renderRecentTransactions()}
