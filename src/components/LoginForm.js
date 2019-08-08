@@ -29,8 +29,7 @@ class LoginForm extends React.Component{
     .then(response => {
       if(response.errors){
         alert(response.errors)
-      }
-      else{
+      } else {
         this.props.setCurrentUser(response)
       }
     })
