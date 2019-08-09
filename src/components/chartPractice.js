@@ -6,19 +6,26 @@ class BudgetChart extends React.Component{
 
   state = {
     dataGrouped:{},
-    keys:[]
+
   }
+
+
 componentDidMount(){
 
   this.setState({
-    dataGrouped: this.createPieData()
+    dataGrouped: this.createPieData(),
 
-  },()=> {
-    this.renderCategoryKeys()
-    this.renderTransactionData()}
+  }
   )
 }
-
+    createColorData = () => {
+    let colorObj = this.props.transactions.map(transaction => {
+        if(transaction.kind === "Expense"){
+          return transaction.category.color
+        }
+      })
+      return Array.from(new Set(colorObj))
+    }
   createPieData = () => {
     return this.props.transactions.reduce((accumulator,currentValue) => {
       if(currentValue.kind === "Expense"){
@@ -65,7 +72,8 @@ componentDidMount(){
       labels: this.renderCategoryKeys(),
       datasets: [{
         label: "Monthly Spending",
-        data: this.renderTransactionData()
+        data: this.renderTransactionData(),
+        backgroundColor:this.createColorData()
       }]
     })
     }
