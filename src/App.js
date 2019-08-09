@@ -9,6 +9,7 @@ import LoginForm from './components/LoginForm.js'
 import AddTransactionForm from './components/AddTransactionForm.js'
 import Profile from './components/Profile.js'
 import TransactionsMainContainer from './containers/TransactionsMainContainer.js'
+import BudgetChart from './components/chartPractice.js'
 
 
 
@@ -137,7 +138,12 @@ class App extends React.Component {
 
   render(){
     return (
-      <div>
+      <div>{
+          this.state.transactions.length > 1?
+          <BudgetChart transactions={this.state.transactions}/>
+          :
+          null
+        }
         <NavBar loggedIn={this.state.loggedIn} logout={this.logout}/>
         <Switch>
           <Route path="/signup" render={() => <SignupForm setCurrentUser={this.setCurrentUser}/>}/>
@@ -146,7 +152,7 @@ class App extends React.Component {
             this.state.currentUser
             ?
             <div>
-              <Route path="/transactions" render={() => <TransactionsMainContainer transactions={this.state.transactions} categories={this.state.categories}/>}/>
+              <Route path="/transactions" render={() => <TransactionsMainContainer editTransaction={this.editTransaction} deleteTransaction={this.deleteTransaction} transactions={this.state.transactions} categories={this.state.categories}/>}/>
               <Route path="/profile" render={() => <Profile  deleteUser={this.deleteUser} updateCurrentUser={this.updateCurrentUser} currentUser={this.state.currentUser}/>}/>
               <Route path="/addtransaction" render={() => <AddTransactionForm addtransaction={this.addtransaction} categories={this.state.categories}/>}/>
               <Route path="/home" render={()=> <HomePage deleteTransaction={this.deleteTransaction} categories={this.state.categories} transactions={this.state.transactions} editTransaction={this.editTransaction} currentUser={this.state.currentUser}/>}/>

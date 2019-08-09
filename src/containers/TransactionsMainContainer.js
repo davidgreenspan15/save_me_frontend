@@ -12,6 +12,14 @@ class TransactionsMainContainer extends React.Component{
     transactions: this.props.transactions
   }
 
+  componentDidUpdate(prevProps,prevState){
+    if(prevState.transactions !== this.props.transactions){
+      this.setState({
+        transactions: this.props.transactions
+      })
+    }
+  }
+
   componentDidMount(){
     this.setState({
       transactions: this.props.transactions
@@ -119,7 +127,7 @@ class TransactionsMainContainer extends React.Component{
       <div>
       <FilterBar categories={this.props.categories} searchTransactions={this.searchTransactions}  filterTransactionsByCategory={this.filterTransactionsByCategory} filterTransactionsByType={this.filterTransactionsByType}/>
       <SortBar sortTransactions={this.sortTransactions}/>
-      <MyTransactionsContainer transactions={this.state.transactions}/>
+      <MyTransactionsContainer transactions={this.state.transactions} deleteTransaction={this.props.deleteTransaction} editTransaction={this.props.editTransaction} categories={this.props.categories} />
       </div>
     )
   }

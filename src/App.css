@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+
+.red{
+  color: rgb(210, 45, 8)
+}
+
+.green{
+  color: rgb(38, 223, 22)
+}
