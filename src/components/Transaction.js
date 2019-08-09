@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 class Transaction extends React.Component{
 
@@ -10,15 +11,35 @@ class Transaction extends React.Component{
     frequency:this.props.transaction.frequency,
     category: this.props.transaction.category.id,
     date: this.props.transaction.date,
-    categories:[]
+    categories:[],
+    color: ""
   }
 
+    componentDidUpdate(prevProps,prevState){
+      if(prevProps.transaction.kind !== this.props.transaction.kind){
+        this.updateColor()
+      }
+    }
 
+    updateColor = () => {
+      if(this.props.transaction.kind === "Expense"){
+        this.setState({
+          color:"red"
+        })
+      }else if(this.props.transaction.kind === "Income"){
+        this.setState({
+          color:"green"
+        })
+      }
+    }
     componentDidMount(){
       this.setState({
         categories:this.props.categories
-      })
-    }
+      },() => {
+        this.updateColor()
+        }
+      )}
+
 
   toggleEdit = (event) => {
     this.setState({
@@ -114,12 +135,13 @@ class Transaction extends React.Component{
           :
           <div>
             <hr/>
-            <p>{this.props.transaction.date}</p>
+
+            <p>{moment(this.props.transaction.date).format('MMMM Do YYYY')}</p>
             <p>{this.props.transaction.kind}</p>
             <p>{this.props.transaction.description}</p>
             <p>{this.props.transaction.category.name}</p>
-            <p>{this.props.transaction.price}</p>
-            <p>{this.props.transaction.created_at}</p>
+            <p className={this.state.color}>{this.props.transaction.price}</p>
+            <p>{moment(this.props.transaction.created_at).format('MMMM Do YYYY, h:mm a') }</p>
             <button onClick={this.toggleEdit} type="button" name="edit">✎</button>
             <button onClick={this.deleteTransaction} type="button" name="delete">ｘ</button>
             <hr/>
