@@ -135,7 +135,7 @@ class Profile extends React.Component{
         <h1>Name:{this.props.currentUser.name}</h1>
         <h1>Username:{this.props.currentUser.username}</h1>
         <h1>Stock Risk Level:{this.props.currentUser.stock_level}</h1>
-        'Profile.js'
+        
 
         <button onClick={this.changeToTrue}type="button" name="changePassword">Change Password</button>
         </div>

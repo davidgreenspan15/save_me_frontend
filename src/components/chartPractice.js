@@ -78,13 +78,24 @@ componentDidMount(){
     })
     }
 
-  render(){
+    renderTotal = () => {
+      let d = new Date()
+      let  day = d.getDate()
+      let year = d.getYear()
+      let month = d.getMonth()
+    let total = this.props.transactions.reduce((accumulator,currentValue) => accumulator + currentValue.price,0)
+    return [total,month]
 
+    }
+
+  render(){
+      console.log(this.renderTotal())
     return(
       <div className="chart">
       <Doughnut
         data={this.renderDataObject()}
       />
+    <p>Total: ${this.renderTotal()}</p>
       </div>
     )
   }

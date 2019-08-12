@@ -15,7 +15,7 @@ handleClick = () =>{
         <Link to="/home"><h1>$aveME</h1></Link>
         <Link to="/addtransaction"><p>Add Transaction</p></Link>
         <Link to="/transactions"><p>Transaction</p></Link>
-        <p>My Budget</p>
+        <Link to="/budget"><p>My Budget</p></Link>
         <Link to="/profile"><p>Profile</p></Link>
         <button onClick={this.handleClick} >Logout</button>
         </div>
