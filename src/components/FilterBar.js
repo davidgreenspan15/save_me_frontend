@@ -25,9 +25,13 @@ class FilterBar extends React.Component{
   }
 
   handleFilterType = (event) => {
+    console.log('state before', this.state.type)
     this.setState({
       type: event.target.value
-    },()=> this.props.filterTransactionsByType(this.state.type))
+    },()=> {
+      console.log('state after', this.state.type)
+      this.props.filterTransactionsByType(this.state.type)
+    })
 
   }
 

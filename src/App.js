@@ -38,6 +38,12 @@ class App extends React.Component {
     projectedYearlySavings:0
   }
 
+  // constructor(props){
+  //   super()
+  //
+  //   this.interval = setInterval(()=>{}, 3600000)
+  // }
+
 
 
   createColorData = () => {
@@ -128,9 +134,9 @@ class App extends React.Component {
     monthlyPace = () => {
       let total = 0
       let daysLeft = 30 - parseInt(this.state.day)
-      this.setState({
-        monthlyPace: daysLeft * parseInt(this.state.dailySpending)
-      })
+
+      let monthlyPace = daysLeft * parseInt(this.state.dailySpending)
+      return monthlyPace
     }
 
     monthlySavings = () => {
@@ -178,9 +184,9 @@ class App extends React.Component {
 
     projectedYearlySavings = () => {
       let monthsRemaining = 12 - parseInt(this.state.month)
-      this.setState({
-        projectedYearlySavings: monthsRemaining * this.state.monthlySavings
-      })
+
+      let projectedYearlySavings = monthsRemaining * this.state.monthlySavings
+      return projectedYearlySavings
     }
 
 
@@ -210,6 +216,49 @@ class App extends React.Component {
     })
   }
 
+  setUpBudgetInfoToState = () => {
+    this.setState({
+      dataGrouped:this.createPieData(),
+      monthlyIncome:this.monthlyIncome(),
+      monthlyExpense:this.monthlyExpense(),
+      dailySpending: this.dailySpending(),
+      monthlySavings: this.monthlySavings()
+    },()=>{
+      this.setState({
+        dataObj: this.renderDataObject(),
+        projectedYearlySavings: this.projectedYearlySavings(),
+        monthlyPace:this.monthlyPace()
+      })
+    })
+  }
+
+  componentDidUpdate(prevProps,prevState){
+    if(prevState.transactions !== this.state.transactions){
+      this.setUpBudgetInfoToState()
+    }
+    if(prevState.currentUser !== this.state.currentUser){
+      this.filterAndSetTransactions()
+    }
+  }
+
+  filterAndSetTransactions = () => {
+    fetch("http://localhost:3000/transactions")
+    .then(r => r.json())
+    .then(transactions => {
+  const myTransactions = transactions.filter(transaction => transaction.user.id === parseInt(localStorage.user_id));
+
+      this.setState({
+        transactions: myTransactions.sort(function(a,b){
+          return new Date(b.date) - new Date(a.date)
+        })
+      },() => {
+        this.setUpBudgetInfoToState()
+
+      })
+    })
+
+  }
+
   componentDidMount(){
 
     this.setDate()
@@ -217,26 +266,13 @@ class App extends React.Component {
     .then(r => r.json())
     .then(transactions => {
   const myTransactions = transactions.filter(transaction => transaction.user.id === parseInt(localStorage.user_id));
+
       this.setState({
         transactions: myTransactions.sort(function(a,b){
           return new Date(b.date) - new Date(a.date)
         })
       },() => {
-        this.setState({
-          dailySpending:this.dailySpending(),
-          monthlySavings: this.monthlySavings(),
-          dataGrouped: this.createPieData()
-
-        },()=>{
-          this.monthlyPace()
-          this.projectedYearlySavings()
-          this.setState({
-            dataObj: this.renderDataObject(),
-            monthlyIncome:this.monthlyIncome(),
-            monthlyExpense:this.monthlyExpense()
-
-          })
-        })
+        this.setUpBudgetInfoToState()
 
       })
     })

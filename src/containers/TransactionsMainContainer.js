@@ -13,7 +13,7 @@ class TransactionsMainContainer extends React.Component{
   }
 
   componentDidUpdate(prevProps,prevState){
-    if(prevState.transactions !== this.props.transactions){
+    if(prevProps.transactions !== this.props.transactions){
       this.setState({
         transactions: this.props.transactions
       })
@@ -48,15 +48,27 @@ class TransactionsMainContainer extends React.Component{
 
   filterTransactionsByType = (type) => {
     if(type === "All"){
+
       this.setState({
         transactions: this.props.transactions
       })
-    }else{
+    }else if(type ==="Expense"){
+
       this.setState({
         transactions: this.props.transactions.filter(transaction => transaction.kind === type)
-      })
+      })}else {
+
+          this.setState({
+            transactions: this.props.transactions.filter(transaction => transaction.kind === type)
+          })
+
+      }
     }
-  }
+
+  // componentDidUpdate(prevProps,prevState) {
+  //   console.log("prevState",prevState.transactions)
+  //   console.log("state",this.state.transactions)
+  // }
 
   sortTransactions = (topic) =>{
     switch (topic) {

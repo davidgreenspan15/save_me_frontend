@@ -133,17 +133,10 @@ class Transaction extends React.Component{
             </form>
           </div>
           :
-          <div>
+          <div className="transaction">
             <hr/>
 
-            <p>{moment(this.props.transaction.date).format('MMMM Do YYYY')}</p>
-            <p>{this.props.transaction.kind}</p>
-            <p>{this.props.transaction.description}</p>
-            <p>{this.props.transaction.category.name}</p>
-            <p className={this.state.color}>{this.props.transaction.price}</p>
-            <p>{moment(this.props.transaction.created_at).format('MMMM Do YYYY, h:mm a') }</p>
-            <button onClick={this.toggleEdit} type="button" name="edit">✎</button>
-            <button onClick={this.deleteTransaction} type="button" name="delete">ｘ</button>
+            <p>{moment(this.props.transaction.date).format('MMMM Do YYYY')} | {this.props.transaction.kind} | {this.props.transaction.description} | {this.props.transaction.category.name} | <span className={this.state.color}>${this.props.transaction.price}</span> | {moment(this.props.transaction.created_at).format('MMMM Do YYYY, h:mm a') } <button onClick={this.toggleEdit}  type="button" name="edit">✎</button>   <button onClick={this.deleteTransaction} className="red" type="button" name="delete">ｘ</button></p>
             <hr/>
           </div>
 

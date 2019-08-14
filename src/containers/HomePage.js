@@ -6,6 +6,7 @@ import RecentTransactionsContainer from './RecentTransactionsContainer.js'
 
 
 
+
 class HomePage extends React.Component{
   render(){
     return(
