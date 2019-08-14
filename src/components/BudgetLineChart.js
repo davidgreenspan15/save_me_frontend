@@ -13,7 +13,21 @@ class BudgetLineChart extends React.Component{
     return(
       <div className="chart">
       <HorizontalBar
-        data={this.props.dataObj}/>
+        data={this.props.dataObj}
+        options={{
+
+
+          tooltips:{
+            callbacks:{
+              label: function(tooltipItem, data){
+                let label = data.datasets[0].data[tooltipItem.index];
+                  label = "Total: -$" + label
+                  return label
+              }
+            }
+          }
+        }}/>
+
       </div>
     )
   }
