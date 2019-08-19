@@ -1,7 +1,17 @@
 import React from 'react'
 
 class UserBudget extends React.Component{
+
+  // numberFormat = () => {
+  //   new Intl.NumberFormat(`en-IN`, {
+  //     style: 'currency',
+  //     currency: 'USD'
+  //   }).format(this.props.monthlySavings)
+  // }
+
   render(){
+
+
     return(
       <div>
       <h1>Monthly Spending</h1>

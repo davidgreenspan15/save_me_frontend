@@ -1,5 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {Navbar,NavItem} from 'react-materialize'
+// import Navbar from 'react-bootstrap/Navbar'
 
 class NavBar extends React.Component{
 
@@ -11,22 +13,47 @@ handleClick = () =>{
     return(
       <div>
       {this.props.loggedIn ?
-        <div>
-        <Link to="/home"><h1>$aveME</h1></Link>
-        <Link to="/addtransaction"><p>Add Transaction</p></Link>
-        <Link to="/transactions"><p>Transaction</p></Link>
-        <Link to="/budget"><p>My Budget</p></Link>
-        <Link to="/profile"><p>Profile</p></Link>
-        <button onClick={this.handleClick} >Logout</button>
-        </div>
+        <nav className="nav-wrapper">
+          <Link to="/home" className='brand-logo'>$aveME</Link>
+          <ul className="right hide-on-med-and-down" id='nav-mobile'>
+            <li><Link to="/addtransaction">Add Transaction</Link></li>
+            <li><Link to="/transactions">Transaction</Link></li>
+            <li><Link to="/budget">My Budget</Link></li>
+            <li><Link to="/profile">Profile</Link></li>
+            <li><Link to="/login" onClick={this.handleClick}>Logout</Link></li>
+            <li>{this.props.stockRequestCount}</li>
+            <button onClick={this.props.resetStockReqeustCount}>Reset</button>
+          </ul>
+        </nav>
         :
-        <div>
-        <h1>$aveME</h1>
-        <Link to="/signup"> <button >Signup</button> </Link>
-        <Link to="/login"> <button >Login</button> </Link>
-        </div>
+        <nav className="nav-wrapper">
+        <Link to="/login" className='brand-logo'>$aveME</Link>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><Link to="/signup">Signup </Link></li>
+        <li><Link to="/login">Login</Link></li>
+        </ul>
+        </nav>
       }
-      </div>
+    </div>
+
+    // <nav>
+    //   <div class="nav-wrapper">
+    //     <a href="#" class="brand-logo">Logo</a>
+    //     <ul id="nav-mobile" class="right hide-on-med-and-down">
+    //       <li><a href="sass.html">Sass</a></li>
+    //       <li><a href="badges.html">Components</a></li>
+    //       <li><a href="collapsible.html">JavaScript</a></li>
+    //     </ul>
+    //   </div>
+    // </nav>
+  //   <Navbar brand={<a />} alignLinks="right">
+  // <NavItem href="">
+  // Getting started
+  // </NavItem>
+  // <NavItem href="components.html">
+  // Components
+  // </NavItem>
+  // </Navbar>
     )
   }
 }

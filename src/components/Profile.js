@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Button, Container} from 'react-bootstrap'
 
 
 class Profile extends React.Component{
@@ -55,35 +55,40 @@ class Profile extends React.Component{
   }
   changePassword = (event) => {
     event.preventDefault()
-    if(this.state.passwordMatch){
-      fetch(`http://localhost:3000/users/${this.props.currentUser.id}/password`,{
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          old_password: this.state.currentPassword,
-          new_password: this.state.newPassword
-        })
-      })
-      .then(resp => resp.json())
-      .then(updateUser => {
-        if(updateUser.errors){
-          alert(updateUser.errors)
-        }else{
-          this.props.updateCurrentUser(updateUser)
-          this.setState({
-            changePassword: false,
-            currentPassword: "",
-            newPassword: "",
-            passwordConfirmation: ""
-          })
-
-        }
-      })
+    if(this.state.newPassword === ""){
+      alert("Password Cannot Be Empty")
     }else{
-      alert("Passwords do not match!")
+
+      if(this.state.passwordMatch){
+        fetch(`http://localhost:3000/users/${this.props.currentUser.id}/password`,{
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            old_password: this.state.currentPassword,
+            new_password: this.state.newPassword
+          })
+        })
+        .then(resp => resp.json())
+        .then(updateUser => {
+          if(updateUser.errors){
+            alert(updateUser.errors)
+          }else{
+            this.props.updateCurrentUser(updateUser)
+            this.setState({
+              changePassword: false,
+              currentPassword: "",
+              newPassword: "",
+              passwordConfirmation: ""
+            })
+
+          }
+        })
+      }else{
+        alert("Passwords do not match!")
+      }
     }
 
     }
@@ -131,15 +136,15 @@ class Profile extends React.Component{
           <button type="Submit" name="button">Submit</button>
         </form>
         :
-        <div>
+        <Container>
         <h1>Name:{this.props.currentUser.name}</h1>
         <h1>Username:{this.props.currentUser.username}</h1>
         <h1>Stock Risk Level:{this.props.currentUser.stock_level}</h1>
 
 
-        <button onClick={this.changeToTrue}type="button" name="edit">Edit Profile</button>
-        <button onClick={this.changeToTrue}type="button" name="changePassword">Change Password</button>
-        </div>
+        <Button variant="info" onClick={this.changeToTrue}type="button" name="edit">Edit Profile</Button>
+        <Button variant="info" onClick={this.changeToTrue}type="Button" name="changePassword">Change Password</Button>
+        </Container>
 
       }
 
@@ -161,7 +166,7 @@ class Profile extends React.Component{
 
       }
 
-      <button onClick={this.deleteUser}type="button" name="delete">Delete Profile</button>
+      <Button variant="danger" onClick={this.deleteUser}type="Button" name="delete">Delete Profile</Button>
       </div>
 
     )
