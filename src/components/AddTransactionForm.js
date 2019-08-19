@@ -1,3 +1,4 @@
+'AddTransactionForm.js'
 import React from 'react'
 
 class AddTransactionForm extends React.Component{
@@ -5,11 +6,13 @@ class AddTransactionForm extends React.Component{
   state = {
     kind: "",
     description: "",
-    price: 0,
+    price: "Price",
     frequency: "Once",
     category: "1",
     date: "",
-    categories:[]
+    categories:[],
+    incomeActive:"non-active",
+    expenseActive:"non-active"
 
   }
 
@@ -66,23 +69,38 @@ class AddTransactionForm extends React.Component{
     this.props.addtransaction(response)}
   })}
 
+  active = (e) =>{
+    if(e.target.innerText === "Expense"){
+      this.setState({
+        expenseActive: "expenseActive",
+        incomeActive: "non-active"
+      })
+    }else if(e.target.innerText === "Income"){
+      this.setState({
+        incomeActive: "incomeActive",
+        expenseActive: "non-active"
+      })
+    }
+  }
+
   render(){
     return(
-      <div>
-      <form onSubmit={this.handleSubmit}className="" action="index.html" method="post">
-        <button onClick={this.handleClick} type="button" name="kind">Expense</button>
-        <button onClick={this.handleClick} type="button" name="kind">Income</button>
-        <input onChange={this.handleChange} type="text" name="description" value={this.state.description} placeholder="Description"/>
-        <input onChange={this.handleChange} type="number" name="price" value={this.state.price} placeholder="Price"/>
-        <select onChange={this.handleChange} name="frequency">
-          {this.renderFrequencyOptions()}
-        </select>
-        <select onChange={this.handleChange} name="category">
-          {this.renderCategoryOptions()}
-        </select>
-        <input onChange={this.handleChange} type="date" name="date" value={this.state.date} placeholder="Description"/>
-        <button type="Submit" name="button">Add Transaction</button>
-      </form>
+      <div className="add-transaction-container">
+        <div className="add-transaction-form">
+          <p class="login-welcome" align="center">Create Transaction!</p>
+          <form onSubmit={this.handleSubmit} className="form-add-transaction" action="index.html" method="post">
+            <button onClick={(e)=>{this.handleClick(e); this.active(e)}} className={this.state.expenseActive} type="button" name="kind">Expense</button>
+            <button onClick={(e)=>{this.handleClick(e); this.active(e)}} className={this.state.incomeActive} type="button" name="kind">Income</button>
+            <input onChange={this.handleChange} className="description" type="text" name="description" value={this.state.description} placeholder="Description"/>
+            <input onChange={this.handleChange} className="amount" type="number" name="price" value={this.state.price} placeholder="Price"/>
+            <select onChange={this.handleChange} className="dropdown-transaction" name="category">
+              <option value="" disabled selected>Select a Category</option>
+              {this.renderCategoryOptions()}
+            </select>
+            <input onChange={this.handleChange}className="date" type="date" name="date" value={this.state.date}/>
+            <button className="submit" type="Submit" name="button">Add Transaction</button>
+          </form>
+        </div>
       </div>
 
     )

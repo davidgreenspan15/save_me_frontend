@@ -30,12 +30,14 @@ class App extends React.Component {
     yearMonth: "",
     date:"",
     dailySpending:0,
-    monthlyPace:0,
+    monthlySavings:0,
     day:0,
     monthlyPace:0,
     dataGrouped:{},
     dataObj:{},
-    projectedYearlySavings:0
+    projectedYearlySavings:0,
+    stockRequestCount: localStorage.requestCount
+
   }
 
   // constructor(props){
@@ -135,7 +137,7 @@ class App extends React.Component {
       let total = 0
       let daysLeft = 30 - parseInt(this.state.day)
 
-      let monthlyPace = daysLeft * parseInt(this.state.dailySpending)
+      let monthlyPace = daysLeft * parseInt(this.state.monthlySavings)
       return monthlyPace
     }
 
@@ -191,7 +193,6 @@ class App extends React.Component {
 
 
   logout = () => {
-    this.props.history.push("/login")
     this.setState({
       currentUser: null,
       loggedIn: false
@@ -260,6 +261,10 @@ class App extends React.Component {
   }
 
   componentDidMount(){
+
+    if(!localStorage.requestCount){
+      localStorage.requestCount = 0
+    }
 
     this.setDate()
     fetch("http://localhost:3000/transactions")
@@ -348,22 +353,67 @@ class App extends React.Component {
     })
   }
 
+  resetStockReqeustCount = () => {
+    localStorage.requestCount = 0
+    this.setState({
+      stockRequestCount:localStorage.requestCount
+    })
+  }
+
+  addOne = () => {
+    localStorage.requestCount = parseInt(localStorage.requestCount) + 1
+    this.setState({
+      stockRequestCount: localStorage.requestCount
+    })
+  }
+
+  // <NavBar loggedIn={this.state.loggedIn} logout={this.logout} resetStockReqeustCount={this.resetStockReqeustCount} stockRequestCount={this.state.stockRequestCount}/>
   render(){
     return (
-      <div>
-        <NavBar loggedIn={this.state.loggedIn} logout={this.logout}/>
-        <Switch>
+      <div >
+
+      <Switch className="container">
           <Route path="/signup" render={() => <SignupForm setCurrentUser={this.setCurrentUser}/>}/>
           <Route path="/login" render={() => <LoginForm setCurrentUser={this.setCurrentUser}/>}/>
             {
             this.state.currentUser
             ?
             <div>
-              <Route path="/transactions" render={() => <TransactionsMainContainer editTransaction={this.editTransaction} deleteTransaction={this.deleteTransaction} transactions={this.state.transactions} categories={this.state.categories}/>}/>
-              <Route path="/budget" render={() => <BudgetContainer dataObj={this.state.dataObj} monthlySavings={this.state.monthlySavings} monthlyIncome={this.state.monthlyIncome} monthlyExpense={this.state.monthlyExpense} projectedYearlySavings={this.state.projectedYearlySavings}/>}/>
-              <Route path="/profile" render={() => <Profile  deleteUser={this.deleteUser} updateCurrentUser={this.updateCurrentUser} currentUser={this.state.currentUser}/>}/>
-              <Route path="/addtransaction" render={() => <AddTransactionForm addtransaction={this.addtransaction} categories={this.state.categories}/>}/>
-              <Route path="/home" render={()=> <HomePage monthlySavings={this.state.monthlySavings} dataObj={this.state.dataObj} monthlyPace={this.state.monthlyPace} dailySpending={this.state.dailySpending} deleteTransaction={this.deleteTransaction} categories={this.state.categories} transactions={this.state.transactions} editTransaction={this.editTransaction} currentUser={this.state.currentUser}/>}/>
+              <Route path="/transactions" render={() =>
+                <TransactionsMainContainer
+                  editTransaction={this.editTransaction}
+                  deleteTransaction={this.deleteTransaction}
+                  transactions={this.state.transactions}
+                  categories={this.state.categories}/>}/>
+              <Route path="/budget" render={() =>
+                <BudgetContainer
+                  addOne={this.addOne}
+                  user={this.state.currentUser}
+                  dataObj={this.state.dataObj}
+                  monthlySavings={this.state.monthlySavings}
+                  monthlyIncome={this.state.monthlyIncome}
+                  monthlyExpense={this.state.monthlyExpense}
+                  projectedYearlySavings={this.state.projectedYearlySavings}/>}/>
+              <Route path="/profile" render={() =>
+               <Profile
+                  deleteUser={this.deleteUser}
+                  updateCurrentUser={this.updateCurrentUser}
+                  currentUser={this.state.currentUser}/>}/>
+              <Route path="/addtransaction" render={() =>
+                <AddTransactionForm
+                  addtransaction={this.addtransaction}
+                  categories={this.state.categories}/>}/>
+              <Route path="/home" render={()=>
+                <HomePage
+                  monthlySavings={this.state.monthlySavings}
+                  dataObj={this.state.dataObj}
+                  monthlyPace={this.state.monthlyPace}
+                  dailySpending={this.state.dailySpending}
+                  deleteTransaction={this.deleteTransaction}
+                  categories={this.state.categories}
+                  transactions={this.state.transactions}
+                  editTransaction={this.editTransaction}
+                  currentUser={this.state.currentUser}/>}/>
             </div>
             :
             null

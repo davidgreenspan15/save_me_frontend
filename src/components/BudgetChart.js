@@ -11,10 +11,14 @@ class BudgetChart extends React.Component{
 
   render(){
     return(
-      <Link to="/budget"><div className="chart">
+      <div className="chart home-chart">
       <Doughnut
         data={this.props.dataObj}
         options={{
+          legend:{
+            display:true,
+            position:"left"
+          },
 
 
           tooltips:{
@@ -28,8 +32,8 @@ class BudgetChart extends React.Component{
           }
         }}
       />
-  <p>Monthly Expenses</p>
-      </div></Link>
+    <Link  to="/budget"><p className="home-chart-text">Monthly Expenses</p>
+      </Link></div>
     )
   }
 }
