@@ -1,4 +1,5 @@
 import React from 'react'
+import numeral from 'numeral'
 
 
 class Stock extends React.Component{
@@ -16,7 +17,6 @@ class Stock extends React.Component{
           .then(data => {
 
             if(data.Note){
-              alert(data.Note)
               this.setState({
                 stockPrice: this.props.stock.purchase_price
               })
@@ -33,7 +33,6 @@ class Stock extends React.Component{
           .then(data => {
 
             if(data.Note){
-              alert(data.Note)
               this.setState({
                 stockPrice: this.props.stock.purchase_price
               })
@@ -51,15 +50,18 @@ class Stock extends React.Component{
 
     }
 
-    fetchStockPrices = () => {
-
-    }
 
   render(){
     return(
-      <div onClick={()=>this.props.selectStock(this.props.stock.id)}>
+      <div className="stock-details container" onClick={()=>this.props.selectStock(this.props.stock.id)}>
+        <div className="row">
 
-        <p>{this.props.stock.name}|{this.props.stock.symbol}|{this.state.stockPrice}|{this.props.stock.ytd}%|{this.props.stock.three_ytd}%</p>
+        <p className="col s3" >{this.props.stock.name}</p>
+        <p className="col s2">{this.props.stock.symbol}</p>
+        <p className="col s3">{numeral(this.state.stockPrice).format('$0,0.00')}</p>
+        <p className="col s2">{numeral(this.props.stock.ytd/100).format('0.00%')}</p>
+        <p className="col s2">{numeral(this.props.stock.three_ytd/100).format('0.00%')}</p>
+        </div>
       </div>
 
 

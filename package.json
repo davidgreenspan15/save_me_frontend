@@ -8,6 +8,7 @@
     "materialize": "^1.0.0",
     "materialize-css": "^1.0.0",
     "moment": "^2.24.0",
+    "numeral": "^2.0.6",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.11",
     "react-chartjs-2": "^2.7.6",

@@ -121,7 +121,7 @@ class TransactionsMainContainer extends React.Component{
         case "Price":
           this.setState({
             transactions: this.props.transactions.sort(function(a,b) {
-              return a.price - b.price
+              return b.price - a.price
           })
           })
 
@@ -136,10 +136,15 @@ class TransactionsMainContainer extends React.Component{
 
   render(){
     return(
-      <div>
-      <FilterBar categories={this.props.categories} searchTransactions={this.searchTransactions}  filterTransactionsByCategory={this.filterTransactionsByCategory} filterTransactionsByType={this.filterTransactionsByType}/>
+      <div className="everything">
+      <div className="filterNavBar">
+        <FilterBar categories={this.props.categories} searchTransactions={this.searchTransactions}  filterTransactionsByCategory={this.filterTransactionsByCategory} filterTransactionsByType={this.filterTransactionsByType}/>
+      </div>
+      <div className="maincontainer">
       <SortBar sortTransactions={this.sortTransactions}/>
       <MyTransactionsContainer transactions={this.state.transactions} deleteTransaction={this.props.deleteTransaction} editTransaction={this.props.editTransaction} categories={this.props.categories} />
+      </div>
+
       </div>
     )
   }

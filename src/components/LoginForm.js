@@ -39,11 +39,11 @@ class LoginForm extends React.Component{
     return(
       <div className="login-container">
         <div className="login-form">
-          <p class="login-welcome" align="center">Welcome Back!</p>
+          <p class="login-welcome" align="center">Login</p>
           <form onSubmit={this.handleSubmit} className="form-login" action="index.html" method="post">
             <input onChange={this.handleChange} className="un" type="text" name="username" placeholder="Username" value={this.state.username}/>
             <input onChange={this.handleChange} className="pass" type="password" name="password" value={this.state.password} placeholder="Password"/>
-            <button type="Submit" className="submit" name="button">Login</button>
+            <button type="Submit" className="login-submit" name="button">Login</button>
           </form>
         </div>
       </div>

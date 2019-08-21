@@ -126,51 +126,66 @@ class Profile extends React.Component{
 
   render(){
     return(
-      <div>
-      { this.state.edit ?
-        <form onSubmit={this.editUserProfile} className="" action="index.html" method="post">
-          <input onChange={this.handleChange} type="text" name="name" value={this.state.name}/>
-          <input onChange={this.handleChange} type="text" name="username" value={this.state.username} />
-          <input onChange={this.handleChange} type="text" name="stockLevel" value={this.state.stockLevel} />
-          <button onClick={this.changeToFalse} type="button" name="edit">Cancel</button>
-          <button type="Submit" name="button">Submit</button>
-        </form>
-        :
-        <Container>
-        <h1>Name:{this.props.currentUser.name}</h1>
-        <h1>Username:{this.props.currentUser.username}</h1>
-        <h1>Stock Risk Level:{this.props.currentUser.stock_level}</h1>
+      <div className="everything">
+        <div className="maincontainer" >
+        <div className="profile-container">
+        { this.state.edit ?
+
+          <div className="profile-form">
+            <form onSubmit={this.editUserProfile} className="form-signup" action="index.html" method="post">
+              <input onChange={this.handleChange} className="name" type="text" name="name" value={this.state.name}/>
+              <input onChange={this.handleChange} className="un" type="text" name="username" value={this.state.username} />
+              <input onChange={this.handleChange} className="dropdown-signup" type="text" name="stockLevel" value={this.state.stockLevel} />
+              <button onClick={this.changeToFalse} className="cancel" type="button" name="edit">Cancel</button>
+              <button className="submit" type="Submit" name="button">Submit</button>
+            </form>
+        </div>
+          :
+            <div className="profile-info">
+              <div>
+
+                <p className="profile-name"><span style={{fontSize: "20px", color: "#0E6C63"}}>Name:</span> {this.props.currentUser.name}</p>
+                <p className="profile-username"><span style={{fontSize: "20px", color: "#0E6C63"}}>Username:</span> {this.props.currentUser.username}</p>
+                <p className="profile-risk"> Stock Risk Level: <span style={{fontSize: "50px"}}>{this.props.currentUser.stock_level}</span></p>
+              </div>
 
 
-        <Button variant="info" onClick={this.changeToTrue}type="button" name="edit">Edit Profile</Button>
-        <Button variant="info" onClick={this.changeToTrue}type="Button" name="changePassword">Change Password</Button>
-        </Container>
+              <Button className="profile-submit" onClick={this.changeToTrue}type="button" name="edit">Edit Profile</Button>
+              <Button className="profile-submit" onClick={this.changeToTrue}type="Button" name="changePassword">Change Password</Button>
 
-      }
-
-      {
-        this.state.changePassword ?
-
-        <form onSubmit={this.changePassword} className="" action="index.html" method="post">
-          <input onChange={this.handleChange} type="password" name="currentPassword" value={this.state.currentPassword} placeholder="Current Password"/>
-          <input onChange={this.handleChange} type="password" name="newPassword" value={this.state.newPassword} placeholder= "New Password"/>
-          <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={this.state.passwordConfirmation} placeholder="Password Confrimation"/>
-          <button onClick={this.changeToFalse} type="button" name="changePassword">Cancel</button>
-          <button type="Submit" name="button">Submit</button>
-        </form>
-        :
-        null
+              <Button className="delete" onClick={this.deleteUser}type="Button" name="delete">Delete Profile</Button>
+            </div>
 
 
+        }
+
+        {
+          this.state.changePassword ?
+          <div className="profile-form">
+          <form onSubmit={this.changePassword} className="form-signup" action="index.html" method="post">
+            <input onChange={this.handleChange} className="pass" type="password" name="currentPassword" value={this.state.currentPassword} placeholder="Current Password"/>
+            <input onChange={this.handleChange} className="pass" type="password" name="newPassword" value={this.state.newPassword} placeholder= "New Password"/>
+            <input onChange={this.handleChange} className="pass" type="password" name="passwordConfirmation" value={this.state.passwordConfirmation} placeholder="Password Confrimation"/>
+            <button onClick={this.changeToFalse}className="cancel" type="button" name="changePassword">Cancel</button>
+            <button className="submit" type="Submit" name="button">Submit</button>
+          </form>
+        </div>
+          :
+          null
 
 
-      }
 
-      <Button variant="danger" onClick={this.deleteUser}type="Button" name="delete">Delete Profile</Button>
+
+        }
+
+      </div>
       </div>
 
+      </div>
     )
   }
 }
+
+
 
 export default Profile

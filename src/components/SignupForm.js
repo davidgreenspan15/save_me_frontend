@@ -75,7 +75,9 @@ class SignupForm extends React.Component{
         <p class="signup-welcome" align="center">Create a SaveME account</p>
         <p class="signup-intro" align="center"> One account to save and invest!</p>
           <form onSubmit={this.handleSubmit} className="form-signup" action="index.html" method="post">
+            <i class="material-icons">account_circle</i>
             <input onChange={this.handleChange} className="name" type="text" name="name" value={this.state.name} placeholder="Name"/>
+            <i class="material-icons">account_circle</i>
             <input onChange={this.handleChange} className="un" type="text" name="username" placeholder="Username" value={this.state.username}/>
             <select class="dropdown-signup" onChange={this.handleChange} name="stockLevel">
               <option value="" disabled selected>Choose a Risk Level</option>
@@ -83,7 +85,9 @@ class SignupForm extends React.Component{
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
+            <i class="material-icons">security</i>
             <input onChange={this.handleChange} className="pass" type="password" name="password" value={this.state.password} placeholder="Password"/>
+            <i class="material-icons">security</i>
             <input onChange={this.handleChange} className="pass-confirmation" onBlur={this.passwordMatch} type="password" name="passwordConfirmation" placeholder="Confirm Password" value={this.state.passwordConfirmation}/>
             <button className="submit" type="Submit" name="button">Signup</button>
           </form>

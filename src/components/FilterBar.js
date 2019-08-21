@@ -37,18 +37,20 @@ class FilterBar extends React.Component{
 
   render(){
     return(
-      <div>
-      <Link to="/addtransaction"><button type="button" name="button">✚</button></Link>
-      <select onChange={this.handleFilterCategory} className="" name="category">
+      <div className="inline">
+      <select onChange={this.handleFilterCategory} className="category-transaction-dropdown" name="category">
+        <option value="" disabled selected>Filter By Category</option>
         <option value="All">All</option>
         {this.renderCategoryOptions()}
       </select>
-      <select onChange={this.handleFilterType}className="" name="Type">
+
+      <select onChange={this.handleFilterType}className="type-transaction-dropdown" name="Type">
+        <option value="" disabled selected>Filter By Income or Expense</option>
         <option value="All">All</option>
         <option value="Expense">Expense</option>
         <option value="Income">Income</option>
       </select>
-      <input onChange={this.handleSearch} type="text" name="search" value={this.state.search}/>
+      <span className="searchbar-text">Search:</span> <input onChange={this.handleSearch} className="searchbar" type="text" name="search" value={this.state.search}/>
       </div>
     )
   }

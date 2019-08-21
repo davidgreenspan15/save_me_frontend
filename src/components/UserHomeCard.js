@@ -1,4 +1,5 @@
 import React from 'react'
+import numeral from 'numeral'
 
 class UserHomeCard extends React.Component{
 
@@ -15,16 +16,15 @@ class UserHomeCard extends React.Component{
         <div className="user-homecard">
          <header class="card-title">Welcome {this.props.currentUser.name}!</header>
          <div className="homecard-details">
-           <p className="user-details">Daily Spending:${this.props.dailySpending}</p>
-           <p className="user-details">My Monthly Pace: ${this.props.monthlyPace} </p>
-           <p className="user-details">My Monthly Savings: ${this.props.monthlySavings}</p>
+           <p className="user-details">Daily Spending:{numeral(this.props.dailySpending).format('$0,0.00')}</p>
+           <p className="user-details">My Monthly Pace: {numeral(this.props.monthlyPace).format('$0,0.00')} </p>
+           <p className="user-details">My Monthly Savings: {numeral(this.props.monthlySavings).format('$0,0.00')}</p>
          </div>
         </div>
        </div>
     )
   }
 }
-
 
 
 export default UserHomeCard
