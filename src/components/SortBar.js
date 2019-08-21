@@ -19,14 +19,16 @@ class SortBar extends React.Component{
 
   render(){
     return(
-      <div>
-      <p onClick={this.handleClick}> Date</p>
-      <p onClick={this.handleClick}>Type</p>
-      <p onClick={this.handleClick}>Description</p>
-      <p onClick={this.handleClick}>Category</p>
-      <p onClick={this.handleClick}>Price</p>
-      <p onClick={this.handleClick}>Created On</p>
+      <ul className="collection">
+      <div className="collection-item all-transaction-top-bar row">
+      <p className="category col s1.5 " onClick={this.handleClick}>Date</p>
+      <p className="category col s2" onClick={this.handleClick}>Type</p>
+      <p className="category col s2" onClick={this.handleClick}>Description</p>
+      <p className="category col s2" onClick={this.handleClick}>Category</p>
+      <p className="category col s2" onClick={this.handleClick}>Price</p>
+      <p className="category col s2" onClick={this.handleClick}>Created On</p>
       </div>
+      </ul>
     )
   }
 }

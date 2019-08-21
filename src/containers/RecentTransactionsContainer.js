@@ -16,13 +16,27 @@ class RecentTransactionsContainer extends React.Component{
 
   render(){
     return(
+      <div>
+      <header className="recent-header">Recent Transactions</header>
+      <div className="recent-container-container">
       <div className="recent-container">
-        <h1>Recent Transactions</h1>
+        <ul className="collection" id="recent-categories">
+        <div className="collection-item top-bar row">
+          <span className="category col s2">Date</span>
+          <span className="category col s1">Type</span>
+          <span className="category col s2">Description</span>
+          <span className="category col s2">Category</span>
+          <span className="category col s2">Price</span>
+          <span className="category col s2">Created On</span>
+        </div>
+        </ul>
         <ul className="collection">
         {this.renderRecentTransactions()}
         </ul>
-      <Link to="/transactions"><a class="waves-effect waves-light btn-small">All Transactions</a></Link>
       </div>
+      <Link to="/transactions"><a class="submit center">All Transactions</a></Link>
+      </div>
+    </div>
     )
   }
 }

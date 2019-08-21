@@ -9,13 +9,15 @@ class MyTransactionsContainer extends React.Component{
   }
 
 
-    
+
   render(){
 
     return(
-      <div>
-      {this.renderMyTransactions()}
-      </div>
+      <div className="all-transaction-container-container">
+      <ul className="all-transactions-collection collection">
+          {this.renderMyTransactions()}
+      </ul>
+    </div>
     )
   }
 }

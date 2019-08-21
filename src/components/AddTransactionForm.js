@@ -1,4 +1,4 @@
-'AddTransactionForm.js'
+
 import React from 'react'
 
 class AddTransactionForm extends React.Component{
@@ -85,9 +85,10 @@ class AddTransactionForm extends React.Component{
 
   render(){
     return(
-      <div className="add-transaction-container">
+      <div className="everything">
+      <div className="maincontainer">
         <div className="add-transaction-form">
-          <p class="login-welcome" align="center">Create Transaction!</p>
+          <p class="add-transaction-welcome" align="center">Create Transaction!</p>
           <form onSubmit={this.handleSubmit} className="form-add-transaction" action="index.html" method="post">
             <button onClick={(e)=>{this.handleClick(e); this.active(e)}} className={this.state.expenseActive} type="button" name="kind">Expense</button>
             <button onClick={(e)=>{this.handleClick(e); this.active(e)}} className={this.state.incomeActive} type="button" name="kind">Income</button>
@@ -100,9 +101,9 @@ class AddTransactionForm extends React.Component{
             <input onChange={this.handleChange}className="date" type="date" name="date" value={this.state.date}/>
             <button className="submit" type="Submit" name="button">Add Transaction</button>
           </form>
-        </div>
       </div>
-
+      </div>
+      </div>
     )
   }
 }

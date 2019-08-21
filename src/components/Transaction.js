@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-
+import numeral from 'numeral'
 class Transaction extends React.Component{
 
   state = {
@@ -12,7 +12,9 @@ class Transaction extends React.Component{
     category: this.props.transaction.category.id,
     date: this.props.transaction.date,
     categories:[],
-    color: ""
+    color: "",
+    incomeActive:"non-active",
+    expenseActive:"non-active"
   }
 
     componentDidUpdate(prevProps,prevState){
@@ -44,7 +46,21 @@ class Transaction extends React.Component{
   toggleEdit = (event) => {
     this.setState({
       [event.target.name]: !this.state.edit
-    })
+    },()=>{
+      if (this.props.transaction.kind === "Expense"){
+        this.setState({
+          expenseActive: "expenseActive",
+          incomeActive: "non-active"
+        })
+      }
+      else if(this.props.transaction.kind === "Income"){
+        this.setState({
+          incomeActive: "incomeActive",
+          expenseActive: "non-active"
+        })
+      }
+    }
+  )
   }
   handleClick = (event) => {
     this.setState({
@@ -110,32 +126,51 @@ class Transaction extends React.Component{
      .then(transactionid => this.props.deleteTransaction(transactionid))
    }
 
+   active = (e) =>{
+     if(e.target.innerText === "Expense"){
+       this.setState({
+         expenseActive: "expenseActive",
+         incomeActive: "non-active"
+       })
+     }else if(e.target.innerText === "Income"){
+       this.setState({
+         incomeActive: "incomeActive",
+         expenseActive: "non-active"
+       })
+     }
+   }
+
 
   render(){
     return(
       <div>
         {this.state.edit?
-          <div>
-            <form onSubmit={this.handleSubmit}className="" action="index.html" method="post">
-              <button onClick={this.handleClick} type="button" name="kind">Expense</button>
-              <button onClick={this.handleClick} type="button" name="kind">Income</button>
-              <input onChange={this.handleChange} type="text" name="description" value={this.state.description} placeholder="Description"/>
-              <input onChange={this.handleChange} type="number" name="price" value={this.state.price} placeholder="Price"/>
-              <select onChange={this.handleChange} value={this.state.frequency} name="frequency">
-                {this.renderFrequencyOptions()}
-              </select>
-              <select onChange={this.handleChange} value={this.state.category} name="category">
+          <div className="add-transaction-form">
+            <p class="add-transaction-welcome" align="center">Edit Transaction</p>
+            <form onSubmit={this.handleSubmit}className="form-add-transaction" action="index.html" method="post">
+              <button onClick={(e)=>{this.handleClick(e); this.active(e)}} className={this.state.expenseActive} type="button" name="kind">Expense</button>
+              <button onClick={(e)=>{this.handleClick(e); this.active(e)}} className={this.state.incomeActive} type="button" name="kind">Income</button>
+              <input onChange={this.handleChange} className="description" type="text" name="description" value={this.state.description} placeholder="Description"/>
+              <input onChange={this.handleChange} className="amount" type="number" name="price" value={this.state.price} placeholder="Price"/>
+              <select onChange={this.handleChange} className="dropdown-transaction" value={this.state.category} name="category">
+                <option value="" disabled selected>Select a Category</option>
                 {this.renderCategoryOptions()}
               </select>
-              <input onChange={this.handleChange} type="date" name="date" value={this.state.date} placeholder="Description"/>
-              <button onClick={this.toggleEdit} type="button" name="edit">Cancel</button>
-              <button type="Submit" name="button">Submit</button>
+              <input onChange={this.handleChange} className="date" type="date" name="date" value={this.state.date} placeholder="Description"/>
+              <button onClick={this.toggleEdit} className="cancel" type="button" name="edit">Cancel</button>
+              <button className="submit" type="Submit" name="button">Submit</button>
             </form>
           </div>
           :
-          <div className="transaction">
-
-            <p>{moment(this.props.transaction.date).format('MMMM Do YYYY')}  {this.props.transaction.kind}  {this.props.transaction.description}  {this.props.transaction.category.name}  <span className={this.state.color}>${this.props.transaction.price}</span>  {moment(this.props.transaction.created_at).format('MMMM Do YYYY, h:mm a') } <button onClick={this.toggleEdit}  type="button" name="edit">✎</button>   <button onClick={this.deleteTransaction} className="red" type="button" name="delete">ｘ</button></p>
+          <div className="collection-item row">
+            <span className="transaction-details col s1.5">{moment(this.props.transaction.date).format('MMMM Do YYYY')}</span>
+              <span className="transaction-details col s1">{this.props.transaction.kind}</span>
+              <span className="transaction-details col s2">{this.props.transaction.description}</span>
+              <span className="transaction-details col s2">{this.props.transaction.category.name}</span>
+              <span className="transaction-details col s2">{numeral(this.props.transaction.price).format('$0,0.00')}</span>
+              <span className="transaction-details col s1.5">{moment(this.props.transaction.created_at).format('MMMM Do YYYY, h:mm a') }</span>
+              <button className="edit-transaction " onClick={this.toggleEdit}  type="button" name="edit">✎</button>
+              <button className="delete-transaction" onClick={this.deleteTransaction}type="button" name="delete">ｘ</button>
           </div>
 
         }

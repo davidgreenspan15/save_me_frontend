@@ -29,6 +29,12 @@ class StockRecommendationsContainer extends React.Component{
 
     }
 
+    // componentDidUpdate(prevProps){
+    //   if(prevProps.user.stock_level !== this.props.user.stock_level){
+    //     console.log("after update")
+    //   }
+    // }
+
 
 
     filterStocks = (stocks) => {
@@ -105,13 +111,22 @@ class StockRecommendationsContainer extends React.Component{
     return(
       <div>
       {(this.state.moreInfo)?
-        <div>
+        <div className= "stock-moreinfo-container container'
+">
         <StockMoreInfo selectedStock={this.state.selectedStock} noMoreInfo={this.noMoreInfo}/>
         </div>
         :
-        <div>
-        <p>Name|Symbol|Purchase Price|YTD%| 3-Year YTD%|</p>
+        <div className= "stockinfo-container container">
+          <div className="stockinfo-top-bar row">
+        <p className="stock-category ">Name</p>
+        <p className="stock-category ">Symbol</p>
+        <p className="stock-category  ">Purchase Price</p>
+        <p className="stock-category  ">YTD%</p>
+        <p className="stock-category "> 3-Year YTD%</p>
+        </div >
+        <div className="stock-container">
         {this.renderStocks()}
+        </div>
         </div>
       }
 

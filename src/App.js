@@ -1,4 +1,4 @@
-'App.js'
+
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -11,6 +11,8 @@ import Profile from './components/Profile.js'
 import TransactionsMainContainer from './containers/TransactionsMainContainer.js'
 import BudgetChart from './components/chartPractice.js'
 import BudgetContainer from './containers/BudgetContainer.js'
+import numeral from 'numeral'
+
 
 
 
@@ -291,7 +293,7 @@ class App extends React.Component {
     .then(resp => resp.json())
     .then(user => {
       if (user.errors){
-        alert(user.errors)
+
       }else{
         this.setState({
           currentUser: user,
@@ -367,12 +369,12 @@ class App extends React.Component {
     })
   }
 
-  // <NavBar loggedIn={this.state.loggedIn} logout={this.logout} resetStockReqeustCount={this.resetStockReqeustCount} stockRequestCount={this.state.stockRequestCount}/>
   render(){
     return (
       <div >
+        <NavBar loggedIn={this.state.loggedIn} logout={this.logout} resetStockReqeustCount={this.resetStockReqeustCount} stockRequestCount={this.state.stockRequestCount}/>
 
-      <Switch className="container">
+      <Switch className="everything">
           <Route path="/signup" render={() => <SignupForm setCurrentUser={this.setCurrentUser}/>}/>
           <Route path="/login" render={() => <LoginForm setCurrentUser={this.setCurrentUser}/>}/>
             {
