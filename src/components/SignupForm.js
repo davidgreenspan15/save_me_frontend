@@ -85,9 +85,7 @@ class SignupForm extends React.Component{
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
-            <i class="material-icons">security</i>
             <input onChange={this.handleChange} className="pass" type="password" name="password" value={this.state.password} placeholder="Password"/>
-            <i class="material-icons">security</i>
             <input onChange={this.handleChange} className="pass-confirmation" onBlur={this.passwordMatch} type="password" name="passwordConfirmation" placeholder="Confirm Password" value={this.state.passwordConfirmation}/>
             <button className="submit" type="Submit" name="button">Signup</button>
           </form>

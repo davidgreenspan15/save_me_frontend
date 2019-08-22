@@ -292,7 +292,7 @@ nav .brand-logo {
     width: 803px;
     height: 479px;
     margin: 100px;
-    padding: 58px 50px;
+    padding: 16px 50px;
     padding-bottom: 46px;
     text-align: center;
     display: flex;
@@ -694,7 +694,7 @@ nav .brand-logo {
       .recent-container {
     display: flex;
     flex-direction: column;
-    width: 1214px;
+    width: 1250px;
     height: 341px;
 }
 
